@@ -2324,7 +2324,18 @@ public abstract class JSON
         }
 
         if (json instanceof com.alibaba.fastjson2.JSONArray) {
-            return new JSONArray((com.alibaba.fastjson2.JSONArray) json);
+            JSONArray jsonv1 = new JSONArray();
+            com.alibaba.fastjson2.JSONArray jsonv2 = (com.alibaba.fastjson2.JSONArray) json;            
+            if(jsonv2 != null){
+                for(Object item: jsonv2){
+                    if(item instanceof com.alibaba.fastjson2.JSON){
+                        jsonv1.add(toJSON(item));
+                    } else {
+                        jsonv1.add(item);
+                    }
+                }
+            }
+            return jsonv1;
         }
 
         return json;
